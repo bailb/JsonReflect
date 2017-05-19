@@ -74,7 +74,7 @@ def decodeJson(jsonStr,elementList,i):
                 if(False == isListLegal(jsonStr[item])):
                     print("This json wasn't right["+item+"]")
                     return False
-                decodeJson(jsonStr[item],elementList,i=i+1)
+                decodeJson(jsonStr[item],elementList,i)
             elif(isinstance(jsonStr[item],str) or isinstance(jsonStr[item],unicode)):
 #                print("****%s"%jsonStr[item])
                  pass
