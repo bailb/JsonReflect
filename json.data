@@ -1,0 +1,36 @@
+{
+	"TVList":
+	[
+		{
+			"channelNum":"[int]channelNum",
+			"channelMode":"[int] channelMode",
+			"channels":
+			[
+				{
+					"publicExpire":"[long]publicExpire",
+					"publicToken":"publicToken"
+				}
+			],
+			"aplist":
+			[
+				{
+					"apEnable":"[int]apEnable",
+					"upgrade":
+					{
+						"version":"update version",
+						"desc":"description",
+						"packageUrl":"package url"
+					}
+				}
+			]
+		}
+	],
+	"response":
+	[{
+	  "filter":["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyy"]
+	}],
+	"resource":
+    {
+	  "ID":"xxxxxxxxxxxxxxxx"
+    }
+}
