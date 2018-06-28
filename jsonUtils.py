@@ -6,7 +6,7 @@ class Element(object):
                 self._level=level
                 self._name=name
                 self._desc=desc
-                self._eleType=eleType
+                self._eleType=eleType        
 
 class ElementList(object):
         def __init__(self):
@@ -62,13 +62,14 @@ def isListLegal(value):
 def decodeJson(jsonStr,elementList,i):
     if(isinstance(jsonStr,dict)):
         for item in jsonStr:
-#            print("item  : ["+item + "] getType[ "+ getType(jsonStr[item]) + "] type %s %s"%(type(jsonStr[item]),i))
+            print("item  : ["+item + "] getType[ "+ getType(jsonStr[item]) + "] type %s %s"%(type(jsonStr[item]),i))
             desc=getDesc(jsonStr[item])
             valueType=getType(jsonStr[item])
             aElem=Element(i,item,desc,valueType)
             elementList.push_back(aElem)
 
             if(isinstance(jsonStr[item],dict)):
+                print("This json=======================")
                 decodeJson(jsonStr[item],elementList,i=i+1)
             elif(isinstance(jsonStr[item],list)):
                 if(False == isListLegal(jsonStr[item])):
@@ -76,10 +77,10 @@ def decodeJson(jsonStr,elementList,i):
                     return False
                 decodeJson(jsonStr[item],elementList,i)
             elif(isinstance(jsonStr[item],str) or isinstance(jsonStr[item],unicode)):
-#                print("****%s"%jsonStr[item])
-                 pass
+                print("jsonStr[%s]"%jsonStr[item])
+                pass
             else:
-#                print("ERROR type:%s" % type(jsonStr[item]))
+                print("ERROR type:%s" % type(jsonStr[item]))
                 pass
     elif(isinstance(jsonStr,list)):
         length=len(jsonStr)
@@ -88,7 +89,7 @@ def decodeJson(jsonStr,elementList,i):
                 decodeJson(jsonStr[j],elementList,i=i+1)
             else:
                 pass
-#                print("type [%s]"%type(jsonStr[j]))
+                print("type [%s]"%type(jsonStr[j]))
     else:
         print("jsonStr is not json object!")
     return True
