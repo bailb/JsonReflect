@@ -22,7 +22,7 @@ def eleToCode(element):
     if (element._eleType == "var" or element._eleType == "obj"):
         print("\t"+valueType+" "+element._name+";");
     elif (element._eleType == "objlist" or element._eleType == "varlist"):
-        print("\tstd::list<"+valueType+"> "+element._name+";");   
+        print("\tstd::list<"+valueType+"> "+element._name+";"); 
 
 def conToClassEx(eList):
     classStack = jsonUtils.ElementList();
@@ -30,7 +30,6 @@ def conToClassEx(eList):
     if(listCount <= 0):
         print("eListCount shouldn't be lt 0");
         return None;
-    
     statckTopLevel=-1;
     for i in range(0,listCount):
         aEl=eList.getIndex(i);
@@ -65,6 +64,42 @@ def conToClassEx(eList):
                 objElement=jsonUtils.Element(objLevel,aEl._name,"["+aEl._name+"_Element] list","objlist");
             classStack.push(objElement);
 
+def conJstrToMetaInfo(eList):
+    classStack = jsonUtils.ElementList();
+    listCount = eList.count();
+    if(listCount <= 0):
+        print("eListCount shouldn't be lt 0");
+        return None;
+    print("METAINFO_CREATE(requestData);");  
+    stackTopLevel=0;
+
+    for i in range(0,listCount):
+        aEl=eList.getIndex(i);
+        #print("==============type:"+aEl._eleType+ " name:"+aEl._name+" level %s"%aEl._level);
+        if (i == 0 or (aEl._level ==0 and (aEl._eleType.startswith("objbegin") or aEl._eleType.startswith("objlistbegin")))):
+            classStack.push(aEl);
+            stackTopLevel = aEl._level;
+            print("METAINFO_CREATE("+aEl._name+")");
+        else:
+           # print("type:"+aEl._eleType);
+            stackTopEl=classStack.getIndex(classStack.count()-1); #just look, don't pop
+            if (aEl._eleType.startswith("objlistbegin") or aEl._eleType.startswith("objbegin")):
+                if (aEl._eleType.startswith("objbegin")):
+                    print(tab(aEl._level)+ "METAINFO_CHILD_BEGIN("+stackTopEl._name+","+aEl._name+"Element,"+aEl._name+")"); 
+                else:
+                    print(tab(aEl._level)+ "METAINFO_CHILD_LIST_BEGIN("+stackTopEl._name+","+aEl._name+"Element,"+aEl._name+")");                                        
+                classStack.push(aEl)
+                stackTopLevel = aEl._level;
+            elif (aEl._eleType.startswith("varlist")):
+                print(tab(aEl._level)+ "METAINFO_ADD_MEMBER_LIST("+stackTopEl._name+","+aEl._name+","+aEl._name+")");
+            elif (aEl._eleType.startswith("objlistend") or aEl._eleType.startswith("objend")):
+                print(tab(aEl._level)+  "METAINFO_CHILD_END();\n")
+                classStack.pop();#just pop
+            elif (aEl._eleType.startswith("var")):
+                print(tab(aEl._level)+ "METAINFO_ADD_MEMBER("+stackTopEl._name+","+aEl._name+","+aEl._name+")");
+
+
+
 
 def tab(num):
     space='    '
@@ -98,6 +133,7 @@ def dumpClass(elementList):
     level=0
     for i in range(elementList.count()):
         aEl=elementList.getIndex(i)
+        print("name:"+aEl._name+"    level %s"%aEl._level+ "type:"+aEl._eleType)
         if (aEl._eleType.startswith("objlistbegin") or aEl._eleType.startswith("objbegin") ):
             level=aEl._level
             endline=getEndLine(elementList,level,i);
@@ -124,5 +160,7 @@ print("=======================================2222222222=")
 genRequestClass(eList)
 print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 conToClassEx(eList)
+print("lllllllllllllllllllllllllllllllllllllllllllllllllllll")
+conJstrToMetaInfo(eList)
 #generateClass(eList,0,15)
 #print("i[%s] desc[%s] type[%s] name[%s] [%s]"%(aEl._level,aEl._desc,aEl._eleType,aEl._name,i))
