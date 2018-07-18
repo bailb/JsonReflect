@@ -1,2 +1,2 @@
 # JsonReflect
-Asimple tool to convert Json to class
+Asimple tool to convert Json to cpp class

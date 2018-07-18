@@ -14,7 +14,7 @@
 			"aplist":
 			[
 				{
-					"apEnable":"[int]apEnable",
+					"apEnable":"[bool]apEnable",
 					"upgrade":
 					{
 						"version":"update version",
@@ -23,15 +23,17 @@
 					}
 				}
 
-			]
-		}
-	],
-	"response":
-	[{
-	  "filter":["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyy"]
-	}],
-	"resource":
-    {
-	  "ID":"xxxxxxxxxxxxxxxx"
-    }
+			],
+			"response":
+			[
+			{
+			"filter":["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyy"]
+			}
+			],
+			"resource":
+			{
+			"ID":"xxxxxxxxxxxxxxxx"
+			}
+			}
+	]
 }
