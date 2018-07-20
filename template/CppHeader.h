@@ -6,7 +6,7 @@ using namespace std;
 class $META_NAME$ : public TransBaseObj 
 {
 public: //request
-    $META_STRUCT$
+$META_STRUCT$
 private:
     DEFINE_METAINFO($META_STRUCT_ROOT$); 
 public:
