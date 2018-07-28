@@ -1,6 +1,6 @@
 #include<iostream>
 #include<string>
-#include"CppHeader.h"
+#include"$META_NAME$.h"
 
 $META_NAME$::$META_NAME$()
 {

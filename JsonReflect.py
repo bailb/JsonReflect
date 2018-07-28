@@ -4,13 +4,16 @@ import json
 
 def conToClassDesc(encodejson,eList):
     originElemList=jsonUtils.ElementList()
-    if (jsonUtils.decodeJson(encodejson,originElemList,0) == False):
+
+    aElem=jsonUtils.Element(0,"root","rootStart","obj")
+    originElemList.push_back(aElem)
+    if (jsonUtils.decodeJson(encodejson,originElemList,1) == False):
         return False
     eStack = jsonUtils.ElementList()
     listCount = originElemList.count()
     for i in range(0,listCount):
         aEl=originElemList.getIndex(i)
-        #print("i[%s] desc[%s] type[%s] name[%s] [%s]"%(aEl._level,aEl._desc,aEl._eleType,aEl._name,i))
+#        print("i[%s] desc[%s] type[%s] name[%s] [%s]"%(aEl._level,aEl._desc,aEl._eleType,aEl._name,i))
         if (aEl._eleType == 'objlist' or aEl._eleType == 'obj'):
             if (eStack.count() == 0):
                 eStack.push(aEl)

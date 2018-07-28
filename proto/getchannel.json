@@ -1,0 +1,15 @@
+{
+	"channelNum":"[int]channelNum",
+	"channelMode":"[int] channelMode",
+	"channels":
+	[
+		{
+			"publicExpire":"[long]publicExpire",
+			"publicToken":"publicToken"
+		}
+	],
+    "resource":
+	{
+	    "ID":"x's ID"
+	}
+}

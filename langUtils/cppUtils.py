@@ -57,7 +57,7 @@ def conToClassEx(eList):
                     break;
                 if (topEl._level >= statckTopLevel):
                     statckTopLevel = topEl._level;
-                    #print(eleToCode(topEl));
+#print("================================== "+aEl._name + " " + aEl._eleType +" %d "%statckTopLevel);#+eleToCode(topEl));
                     codeString += (eleToCode(topEl)+"\n");
                    # print("\tlevel[%s] desc[%s] type[%s] name[%s] index[%s]"%(topEl._level,topEl._desc,topEl._eleType,topEl._name,i));                    
                 elif(topEl._level < statckTopLevel):
@@ -92,6 +92,7 @@ def getCPPValueType(desc):
 def conJstrToMetaInfo(eList):
     classStack = jsonUtils.ElementList();
     listCount = eList.count();
+    print("listCount[%d]"%listCount);
     if(listCount <= 0):
         print("eListCount shouldn't be lt 0");
         return None;
@@ -99,14 +100,15 @@ def conJstrToMetaInfo(eList):
     stackTopLevel=0;
     for i in range(0,listCount):
         aEl=eList.getIndex(i);
-        #print("==============type:"+aEl._eleType+ " name:"+aEl._name+" level %s"%aEl._level);
+#print("==============type:"+aEl._eleType+ " name:"+aEl._name+" level %s"%aEl._level);
         if (i == 0 or (aEl._level ==0 and (aEl._eleType.startswith("objbegin") or aEl._eleType.startswith("objlistbegin")))):
             classStack.push(aEl);
             stackTopLevel = aEl._level;
             #print(tab(aEl._level)+"METAINFO_CREATE("+aEl._name+"_Element);");
             codeString += (tab(aEl._level)+"METAINFO_CREATE("+aEl._name+"_Element);\n");
         else:
-           # print("type:"+aEl._eleType);
+#            print("type:"+aEl._eleType);
+# print("classStack.count[%d]"%classStack.count());
             stackTopEl=classStack.getIndex(classStack.count()-1); #just look, don't pop
             if (aEl._eleType.startswith("objlistbegin") or aEl._eleType.startswith("objbegin")):
                 if (aEl._eleType.startswith("objbegin")):
@@ -127,7 +129,7 @@ def conJstrToMetaInfo(eList):
                 codeString += (tab(aEl._level)+  "METAINFO_CHILD_END();\n\n");
                 classStack.pop();#just pop
             elif (aEl._eleType.startswith("var")):
-                #print(tab(aEl._level)+ "METAINFO_ADD_MEMBER("+stackTopEl._name+"_Element,"+getCPPValueType(aEl._desc)+","+aEl._name+");");
+#print(tab(aEl._level)+ "METAINFO_ADD_MEMBER("+stackTopEl._name+"_Element,"+getCPPValueType(aEl._desc)+","+aEl._name+");");
                 codeString += (tab(aEl._level)+ "METAINFO_ADD_MEMBER("+stackTopEl._name+"_Element,"+getCPPValueType(aEl._desc)+","+aEl._name+");\n");
 
     return codeString;
@@ -161,13 +163,12 @@ def genCode(fileList):
         contents1= contents1.replace("$META_NAME$",metaName);
         contents1 = contents1.replace("$META_INFO_DESC$",metaDesc);
 
+        print("targetFileName: "+tarFileName);
         f = open("./source/"+tarFileName+".cpp",'w')
         f.write(contents1);
         f.close();
 
 
-        print(contents1);
-        print("=============================================")
         contents1 = "";
         contents1= rawHeaderContents.replace("$META_STRUCT$",structCode);
         contents1= contents1.replace("$META_STRUCT_ROOT$",structRootName);
@@ -176,6 +177,5 @@ def genCode(fileList):
         f = open("./source/include/"+tarFileName+".h",'w')
         f.write(contents1);
         f.close();
-        print(contents1);
 
 

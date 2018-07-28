@@ -62,7 +62,7 @@ def isListLegal(value):
 def decodeJson(jsonStr,elementList,i):
     if(isinstance(jsonStr,dict)):
         for item in jsonStr:
-       #     print(getDesc(jsonStr[item])+" item  : ["+item + "] getType[ "+ getType(jsonStr[item]) + "] type %s %s"%(type(jsonStr[item]),i))
+#print(getDesc(jsonStr[item])+" item  : ["+item + "] getType[ "+ getType(jsonStr[item]) + "] type %s %s"%(type(jsonStr[item]),i))
             desc=getDesc(jsonStr[item])
             valueType=getType(jsonStr[item])
             if(valueType=="varlist"):
